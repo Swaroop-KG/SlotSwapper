@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 services:
   mongo:
     image: mongo:6
@@ -7,27 +7,30 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+
   server:
     build:
-      context: ./server
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: server/Dockerfile
     environment:
       - PORT=4000
-      - MONGO_URI=mongodb://mongo:27017/slotswapper
-      - JWT_SECRET=change_me_in_env
+      - MONGO_URI=mongodb+srv://swaroopkg56_db_user:TopPkfqx3FDRsYDn@slotswapper.k8udack.mongodb.net/?appName=SlotSwapper
+      - JWT_SECRET=5cfb3d1e5b8de1d66f8890d67eded3cca07c77909fc4cd3e6a96ea9d21863820f33d56c21f1bba9c948e59978f935625
     depends_on:
       - mongo
     ports:
       - "4000:4000"
+
   client:
     build:
-      context: ./client
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: client/Dockerfile
     ports:
       - "5173:80"
     environment:
       - VITE_API_URL=http://localhost:4000
     depends_on:
       - server
+
 volumes:
   mongo_data:
