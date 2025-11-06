@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: slotswapper-server
+    env: docker
+    plan: free
+    dockerfilePath: server/Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
